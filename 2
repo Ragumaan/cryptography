@@ -1,0 +1,38 @@
+import string
+
+def substitution_cipher(plaintext, key):
+    """
+    Encrypts a plaintext using a monoalphabetic substitution cipher.
+    
+    Args:
+        plaintext (str): The plaintext to encrypt.
+        key (str): A string representing the substitution key. Must be 26 characters long and contain
+                   each letter of the alphabet exactly once.
+                   
+    Returns:
+        str: The ciphertext produced by the substitution cipher.
+    """
+    # Make sure the key is valid
+    if len(key) != 26:
+        raise ValueError("Key must be 26 characters long.")
+    if not set(key).issuperset(set(string.ascii_lowercase)):
+        raise ValueError("Key must contain each letter of the alphabet exactly once.")
+        
+    # Convert the plaintext to lowercase and remove non-letter characters
+    plaintext = plaintext.lower()
+    plaintext = "".join(c for c in plaintext if c in string.ascii_lowercase)
+    
+    # Build the substitution dictionary from the key
+    substitution_dict = {string.ascii_lowercase[i]: key[i] for i in range(26)}
+    
+    # Use the substitution dictionary to encrypt the plaintext
+    ciphertext = "".join(substitution_dict[c] for c in plaintext)
+    
+    return ciphertext
+
+# Example usage:
+plaintext = "Hello, world!"
+key = "zyxwvutsrqponmlkjihgfedcba"
+ciphertext = substitution_cipher(plaintext, key)
+print(ciphertext)
+
